@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Contador de dinero</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+            padding-bottom: 120px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px 16px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin: 10px 0 6px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 22px 0 10px;
+        }
+
+        .money-list {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+        }
+
+        .money-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 68px;
+            padding: 10px 14px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .money-row:last-child {
+            border-bottom: none;
+        }
+
+        .money-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .money-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f3f4f6;
+            font-size: 21px;
+            flex-shrink: 0;
+        }
+
+        .money-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .money-type {
+            display: block;
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        .quantity {
+            width: 82px;
+            height: 46px;
+            border: 2px solid #d1d5db;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            outline: none;
+            background: #fff;
+            color: #111827;
+        }
+
+        .quantity:focus {
+            border-color: #2563eb;
+        }
+
+        .quantity::-webkit-inner-spin-button,
+        .quantity::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+
+        .total-box {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+            z-index: 100;
+        }
+
+        .total-content {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .total-label {
+            font-size: 15px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .total {
+            font-size: 30px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        button {
+            flex: 1;
+            height: 48px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .clear {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .clear:active {
+            background: #fecaca;
+        }
+
+        @media (min-width: 600px) {
+            body {
+                padding-bottom: 130px;
+            }
+
+            .container {
+                padding-top: 35px;
+            }
+
+            .money-row {
+                min-height: 74px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>💰 Contador de dinero</h1>
+    <div class="subtitle">
+        Introduce cuántas unidades tienes de cada valor
+    </div>
+
+    <div class="section-title">🪙 Monedas</div>
+
+    <div class="money-list">
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">0,01 €</div>
+                    <span class="money-type">1 céntimo</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="0.01">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">0,02 €</div>
+                    <span class="money-type">2 céntimos</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="0.02">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">0,05 €</div>
+                    <span class="money-type">5 céntimos</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="0.05">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">0,10 €</div>
+                    <span class="money-type">10 céntimos</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="0.10">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">0,20 €</div>
+                    <span class="money-type">20 céntimos</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="0.20">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">0,50 €</div>
+                    <span class="money-type">50 céntimos</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="0.50">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">1 €</div>
+                    <span class="money-type">1 euro</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="1">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">🪙</div>
+                <div>
+                    <div class="money-value">2 €</div>
+                    <span class="money-type">2 euros</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="2">
+        </div>
+
+    </div>
+
+
+    <div class="section-title">💶 Billetes</div>
+
+    <div class="money-list">
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">💶</div>
+                <div>
+                    <div class="money-value">5 €</div>
+                    <span class="money-type">Billete</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="5">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">💶</div>
+                <div>
+                    <div class="money-value">10 €</div>
+                    <span class="money-type">Billete</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="10">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">💶</div>
+                <div>
+                    <div class="money-value">20 €</div>
+                    <span class="money-type">Billete</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="20">
+        </div>
+
+        <div class="money-row">
+            <div class="money-info">
+                <div class="money-icon">💶</div>
+                <div>
+                    <div class="money-value">50 €</div>
+                    <span class="money-type">Billete</span>
+                </div>
+            </div>
+            <input class="quantity" type="number" min="0" inputmode="numeric" value="0" data-value="50">
+        </div>
+
+    </div>
+
+
+    <div class="buttons">
+        <button class="clear" onclick="resetAll()">
+            🗑️ Borrar todo
+        </button>
+    </div>
+
+</div>
+
+
+<div class="total-box">
+    <div class="total-content">
+        <div class="total-label">TOTAL</div>
+        <div class="total" id="total">0,00 €</div>
+    </div>
+</div>
+
+
+<script>
+
+    const inputs = document.querySelectorAll(".quantity");
+    const totalElement = document.getElementById("total");
+
+    function calculateTotal() {
+
+        let totalCents = 0;
+
+        inputs.forEach(input => {
+
+            let quantity = parseInt(input.value) || 0;
+            let value = parseFloat(input.dataset.value);
+
+            totalCents += Math.round(quantity * value * 100);
+        });
+
+        const total = totalCents / 100;
+
+        totalElement.textContent = total.toLocaleString("es-ES", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }) + " €";
+    }
+
+
+    inputs.forEach(input => {
+
+        input.addEventListener("input", calculateTotal);
+
+        input.addEventListener("focus", function() {
+            this.select();
+        });
+
+    });
+
+
+    function resetAll() {
+
+        inputs.forEach(input => {
+            input.value = 0;
+        });
+
+        calculateTotal();
+    }
+
+
+    calculateTotal();
+
+</script>
+
+</body>
+</html>
