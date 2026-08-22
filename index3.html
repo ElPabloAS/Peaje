@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>Contador de dinero</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            background: #f3f4f6;
+            color: #111827;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            padding-bottom: 130px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            margin: auto;
+            padding: 18px 12px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 8px 0 4px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           CUENTAS
+        ========================= */
+
+        .account {
+            margin-bottom: 30px;
+        }
+
+        .account-title {
+            font-size: 21px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .account-description {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        /* =========================
+           TABLA
+        ========================= */
+
+        .table {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        }
+
+        .header,
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 105px 105px;
+            align-items: center;
+        }
+
+        .header {
+            min-height: 48px;
+            background: #111827;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .header div {
+            text-align: center;
+        }
+
+        .header div:first-child {
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .row {
+            min-height: 66px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .value {
+            padding-left: 15px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .type {
+            display: block;
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        input {
+            width: 78px;
+            height: 43px;
+
+            border: 2px solid #d1d5db;
+            border-radius: 9px;
+
+            background: white;
+            color: #111827;
+
+            text-align: center;
+
+            font-size: 18px;
+            font-weight: 600;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        /* =========================
+           CANTIDAD FIJA
+        ========================= */
+
+        .fixed {
+            width: 78px;
+            height: 43px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: #e5e7eb;
+            color: #374151;
+
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .no-fixed {
+            width: 78px;
+            height: 43px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #9ca3af;
+
+            font-size: 18px;
+        }
+
+        /* =========================
+           SECCIONES
+        ========================= */
+
+        .section {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 20px 0 10px;
+        }
+
+        /* =========================
+           TOTAL DE CUENTA
+        ========================= */
+
+        .account-total {
+            background: white;
+            margin-top: 10px;
+            padding: 14px 16px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .account-total-label {
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .account-total-value {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           BOTÓN BORRAR
+        ========================= */
+
+        .clear-button {
+            width: 100%;
+            height: 45px;
+
+            margin-top: 10px;
+
+            border: none;
+            border-radius: 11px;
+
+            background: #fee2e2;
+            color: #dc2626;
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .clear-button:active {
+            background: #fecaca;
+        }
+
+        /* =========================
+           TOTAL GENERAL
+        ========================= */
+
+        .total-box {
+            position: fixed;
+
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            background: white;
+
+            padding: 13px 16px
+                calc(13px + env(safe-area-inset-bottom));
+
+            box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.14);
+
+            z-index: 100;
+        }
+
+        .total-content {
+            max-width: 650px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .total-label {
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .total {
+            font-size: 29px;
+            font-weight: 800;
+        }
+
+        /* =========================
+           MÓVIL
+        ========================= */
+
+        @media (max-width: 430px) {
+
+            .header,
+            .row {
+                grid-template-columns: 1fr 88px 88px;
+            }
+
+            input,
+            .fixed,
+            .no-fixed {
+                width: 68px;
+            }
+
+            .value {
+                font-size: 17px;
+            }
+
+            .account-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>💰 Contador de dinero</h1>
+
+    <div class="subtitle">
+        Lleva dos cuentas de dinero por separado
+    </div>
+
+
+    <!-- =====================================================
+         CUENTA 1
+    ====================================================== -->
+
+    <div class="account">
+
+        <div class="account-title">
+            💰 Cuenta 1
+        </div>
+
+        <div class="account-description">
+            Incluye las cantidades fijas
+        </div>
+
+
+        <!-- MONEDAS CUENTA 1 -->
+
+        <div class="section">
+            🪙 Monedas
+        </div>
+
+        <div class="table">
+
+            <div class="header">
+                <div>Valor</div>
+                <div>Mis monedas</div>
+                <div>Fijas</div>
+            </div>
+
+
+            <!-- 0,01 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,01 €
+                    <span class="type">1 céntimo</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="0.01"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,02 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,02 €
+                    <span class="type">2 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="0.02"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,05 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,05 €
+                    <span class="type">5 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="0.05"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="fixed">200</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,10 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,10 €
+                    <span class="type">10 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="0.10"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="fixed">80</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,20 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,20 €
+                    <span class="type">20 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="0.20"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="fixed">40</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,50 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,50 €
+                    <span class="type">50 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="0.50"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="fixed">40</div>
+                </div>
+
+            </div>
+
+
+            <!-- 1 EURO -->
+
+            <div class="row">
+
+                <div class="value">
+                    1 €
+                    <span class="type">1 euro</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="1"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="fixed">25</div>
+                </div>
+
+            </div>
+
+
+            <!-- 2 EUROS -->
+
+            <div class="row">
+
+                <div class="value">
+                    2 €
+                    <span class="type">2 euros</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="2"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BILLETES CUENTA 1 -->
+
+        <div class="section">
+            💶 Billetes
+        </div>
+
+        <div class="table">
+
+            <div class="header">
+                <div>Valor</div>
+                <div>Mis billetes</div>
+                <div>Fijas</div>
+            </div>
+
+
+            <!-- 5 -->
+
+            <div class="row">
+
+                <div class="value">
+                    5 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="5"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 10 -->
+
+            <div class="row">
+
+                <div class="value">
+                    10 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="10"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 20 -->
+
+            <div class="row">
+
+                <div class="value">
+                    20 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="20"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 50 -->
+
+            <div class="row">
+
+                <div class="value">
+                    50 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="1"
+                        data-value="50"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL CUENTA 1 -->
+
+        <div class="account-total">
+
+            <div class="account-total-label">
+                TOTAL CUENTA 1
+            </div>
+
+            <div
+                class="account-total-value"
+                id="total-account-1"
+            >
+                71,00 €
+            </div>
+
+        </div>
+
+
+        <button
+            class="clear-button"
+            onclick="resetAccount(1)"
+        >
+            🗑️ Borrar Cuenta 1
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CUENTA 2
+    ====================================================== -->
+
+    <div class="account">
+
+        <div class="account-title">
+            💵 Cuenta 2
+        </div>
+
+        <div class="account-description">
+            Cuenta independiente sin cantidades fijas
+        </div>
+
+
+        <!-- MONEDAS CUENTA 2 -->
+
+        <div class="section">
+            🪙 Monedas
+        </div>
+
+        <div class="table">
+
+            <div class="header">
+                <div>Valor</div>
+                <div>Mis monedas</div>
+                <div>Fijas</div>
+            </div>
+
+
+            <!-- 0,01 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,01 €
+                    <span class="type">1 céntimo</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="0.01"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,02 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,02 €
+                    <span class="type">2 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="0.02"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,05 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,05 €
+                    <span class="type">5 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="0.05"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,10 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,10 €
+                    <span class="type">10 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="0.10"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,20 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,20 €
+                    <span class="type">20 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="0.20"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 0,50 -->
+
+            <div class="row">
+
+                <div class="value">
+                    0,50 €
+                    <span class="type">50 céntimos</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="0.50"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 1 EURO -->
+
+            <div class="row">
+
+                <div class="value">
+                    1 €
+                    <span class="type">1 euro</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="1"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 2 EUROS -->
+
+            <div class="row">
+
+                <div class="value">
+                    2 €
+                    <span class="type">2 euros</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="2"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BILLETES CUENTA 2 -->
+
+        <div class="section">
+            💶 Billetes
+        </div>
+
+        <div class="table">
+
+            <div class="header">
+                <div>Valor</div>
+                <div>Mis billetes</div>
+                <div>Fijas</div>
+            </div>
+
+
+            <!-- 5 -->
+
+            <div class="row">
+
+                <div class="value">
+                    5 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="5"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 10 -->
+
+            <div class="row">
+
+                <div class="value">
+                    10 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="10"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 20 -->
+
+            <div class="row">
+
+                <div class="value">
+                    20 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="20"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+
+            <!-- 50 -->
+
+            <div class="row">
+
+                <div class="value">
+                    50 €
+                    <span class="type">Billete</span>
+                </div>
+
+                <div class="cell">
+                    <input
+                        type="number"
+                        min="0"
+                        inputmode="numeric"
+                        value="0"
+                        data-account="2"
+                        data-value="50"
+                    >
+                </div>
+
+                <div class="cell">
+                    <div class="no-fixed">—</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL CUENTA 2 -->
+
+        <div class="account-total">
+
+            <div class="account-total-label">
+                TOTAL CUENTA 2
+            </div>
+
+            <div
+                class="account-total-value"
+                id="total-account-2"
+            >
+                0,00 €
+            </div>
+
+        </div>
+
+
+        <button
+            class="clear-button"
+            onclick="resetAccount(2)"
+        >
+            🗑️ Borrar Cuenta 2
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     TOTAL GENERAL
+====================================================== -->
+
+<div class="total-box">
+
+    <div class="total-content">
+
+        <div class="total-label">
+            TOTAL GENERAL
+        </div>
+
+        <div
+            class="total"
+            id="total-general"
+        >
+            71,00 €
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    /*
+    ========================================================
+    CANTIDADES FIJAS DE LA CUENTA 1
+    ========================================================
+
+    200 × 0,05 € = 10 €
+     80 × 0,10 € =  8 €
+     40 × 0,20 € =  8 €
+     40 × 0,50 € = 20 €
+     25 × 1,00 € = 25 €
+
+    TOTAL FIJO = 71 €
+    */
+
+
+    const inputs = document.querySelectorAll(
+        "input[data-value]"
+    );
+
+
+    /*
+    ========================================================
+    CARGAR DATOS GUARDADOS
+    ========================================================
+    */
+
+    inputs.forEach((input, index) => {
+
+        const savedValue =
+            localStorage.getItem(
+                "dinero-input-" + index
+            );
+
+        if (savedValue !== null) {
+            input.value = savedValue;
+        }
+
+    });
+
+
+    /*
+    ========================================================
+    CALCULAR UNA CUENTA
+    ========================================================
+    */
+
+    function calculateAccount(account) {
+
+        let totalCents = 0;
+
+
+        inputs.forEach(input => {
+
+            if (
+                input.dataset.account ===
+                String(account)
+            ) {
+
+                const quantity =
+                    parseInt(input.value) || 0;
+
+                const value =
+                    parseFloat(input.dataset.value);
+
+
+                totalCents += Math.round(
+                    quantity * value * 100
+                );
+            }
+
+        });
+
+
+        /*
+        CANTIDADES FIJAS DE LA CUENTA 1
+        */
+
+        if (account === 1) {
+
+            totalCents += 200 * 5;
+            totalCents += 80 * 10;
+            totalCents += 40 * 20;
+            totalCents += 40 * 50;
+            totalCents += 25 * 100;
+
+        }
+
+
+        return totalCents;
+    }
+
+
+    /*
+    ========================================================
+    FORMATEAR EUROS
+    ========================================================
+    */
+
+    function formatMoney(cents) {
+
+        return (
+            (cents / 100).toLocaleString(
+                "es-ES",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            ) + " €"
+        );
+
+    }
+
+
+    /*
+    ========================================================
+    ACTUALIZAR TODOS LOS TOTALES
+    ========================================================
+    */
+
+    function calculateTotals() {
+
+        const account1 =
+            calculateAccount(1);
+
+        const account2 =
+            calculateAccount(2);
+
+
+        const general =
+            account1 + account2;
+
+
+        document.getElementById(
+            "total-account-1"
+        ).textContent =
+            formatMoney(account1);
+
+
+        document.getElementById(
+            "total-account-2"
+        ).textContent =
+            formatMoney(account2);
+
+
+        document.getElementById(
+            "total-general"
+        ).textContent =
+            formatMoney(general);
+
+    }
+
+
+    /*
+    ========================================================
+    GUARDAR AUTOMÁTICAMENTE
+    ========================================================
+    */
+
+    inputs.forEach((input, index) => {
+
+        input.addEventListener(
+            "input",
+            function () {
+
+                localStorage.setItem(
+                    "dinero-input-" + index,
+                    this.value
+                );
+
+
+                calculateTotals();
+
+            }
+        );
+
+
+        input.addEventListener(
+            "focus",
+            function () {
+
+                this.select();
+
+            }
+        );
+
+    });
+
+
+    /*
+    ========================================================
+    BORRAR UNA CUENTA
+    ========================================================
+    */
+
+    function resetAccount(account) {
+
+        inputs.forEach((input, index) => {
+
+            if (
+                input.dataset.account ===
+                String(account)
+            ) {
+
+                input.value = 0;
+
+                localStorage.setItem(
+                    "dinero-input-" + index,
+                    "0"
+                );
+
+            }
+
+        });
+
+
+        calculateTotals();
+
+    }
+
+
+    /*
+    ========================================================
+    INICIAR
+    ========================================================
+    */
+
+    calculateTotals();
+
+</script>
+
+</body>
+</html>
