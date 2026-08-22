@@ -5,7 +5,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
     >
 
     <title>Contador de dinero</title>
@@ -14,6 +14,10 @@
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            touch-action: manipulation;
         }
 
         body {
@@ -162,6 +166,8 @@
 
             padding: 0;
             cursor: pointer;
+
+            touch-action: manipulation;
         }
 
         .counter button:active {
@@ -199,6 +205,8 @@
 
             outline: none;
             padding: 0;
+
+            touch-action: manipulation;
         }
 
         input:focus {
@@ -285,7 +293,7 @@
         }
 
         /* =========================
-           BORRAR
+           BOTÓN BORRAR
         ========================= */
 
         .clear-button {
@@ -302,6 +310,8 @@
 
             font-size: 15px;
             font-weight: 700;
+
+            touch-action: manipulation;
         }
 
         .clear-button:active {
@@ -450,7 +460,7 @@
         </div>
 
 
-        <!-- MONEDAS -->
+        <!-- MONEDAS CUENTA 1 -->
 
         <div class="section">
             🪙 Monedas
@@ -476,9 +486,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -514,9 +522,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -552,9 +558,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -590,9 +594,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -628,9 +630,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -666,9 +666,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -693,7 +691,7 @@
             </div>
 
 
-            <!-- 1 EURO -->
+            <!-- 1 -->
 
             <div class="row">
 
@@ -704,9 +702,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -731,7 +727,7 @@
             </div>
 
 
-            <!-- 2 EUROS -->
+            <!-- 2 -->
 
             <div class="row">
 
@@ -742,9 +738,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -771,7 +765,7 @@
         </div>
 
 
-        <!-- BILLETES -->
+        <!-- BILLETES CUENTA 1 -->
 
         <div class="section">
             💶 Billetes
@@ -797,9 +791,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -835,9 +827,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -873,9 +863,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -911,9 +899,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -982,6 +968,8 @@
         </div>
 
 
+        <!-- MONEDAS CUENTA 2 -->
+
         <div class="section">
             🪙 Monedas
         </div>
@@ -1006,9 +994,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1044,9 +1030,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1082,9 +1066,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1120,9 +1102,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1158,9 +1138,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1196,9 +1174,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1234,9 +1210,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1272,9 +1246,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1301,7 +1273,7 @@
         </div>
 
 
-        <!-- BILLETES -->
+        <!-- BILLETES CUENTA 2 -->
 
         <div class="section">
             💶 Billetes
@@ -1327,9 +1299,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1365,9 +1335,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1403,9 +1371,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1441,9 +1407,7 @@
 
                 <div class="counter">
 
-                    <button
-                        onclick="changeValue(this, -1)"
-                    >−</button>
+                    <button onclick="changeValue(this, -1)">−</button>
 
                     <input
                         type="number"
@@ -1526,11 +1490,34 @@
 
 <script>
 
-    /*
-    ========================================================
-    DATOS
-    ========================================================
-    */
+    /* =====================================================
+       BLOQUEAR ZOOM POR DOBLE TOQUE
+    ===================================================== */
+
+    let lastTouchEnd = 0;
+
+    document.addEventListener(
+        "touchend",
+        function (event) {
+
+            const now = Date.now();
+
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+
+            lastTouchEnd = now;
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
+    /* =====================================================
+       INPUTS
+    ===================================================== */
 
     const inputs =
         document.querySelectorAll(
@@ -1538,11 +1525,9 @@
         );
 
 
-    /*
-    ========================================================
-    CARGAR DATOS GUARDADOS
-    ========================================================
-    */
+    /* =====================================================
+       CARGAR DATOS GUARDADOS
+    ===================================================== */
 
     inputs.forEach((input, index) => {
 
@@ -1558,11 +1543,9 @@
     });
 
 
-    /*
-    ========================================================
-    BOTONES + Y -
-    ========================================================
-    */
+    /* =====================================================
+       BOTONES + Y -
+    ===================================================== */
 
     function changeValue(button, amount) {
 
@@ -1580,8 +1563,6 @@
         value += amount;
 
 
-        // Nunca permitir valores negativos
-
         if (value < 0) {
             value = 0;
         }
@@ -1589,8 +1570,6 @@
 
         input.value = value;
 
-
-        // Guardar
 
         const index =
             Array.from(inputs).indexOf(input);
@@ -1602,18 +1581,14 @@
         );
 
 
-        // Actualizar totales
-
         calculateTotals();
 
     }
 
 
-    /*
-    ========================================================
-    CALCULAR CUENTA
-    ========================================================
-    */
+    /* =====================================================
+       CALCULAR CUENTA
+    ===================================================== */
 
     function calculateAccount(account) {
 
@@ -1646,9 +1621,9 @@
 
 
         /*
-        CANTIDADES FIJAS
-        SOLO CUENTA 1
-        */
+         * CANTIDADES FIJAS
+         * SOLO CUENTA 1
+         */
 
         if (account === 1) {
 
@@ -1665,11 +1640,9 @@
     }
 
 
-    /*
-    ========================================================
-    FORMATO DE DINERO
-    ========================================================
-    */
+    /* =====================================================
+       FORMATEAR DINERO
+    ===================================================== */
 
     function formatMoney(cents) {
 
@@ -1686,11 +1659,9 @@
     }
 
 
-    /*
-    ========================================================
-    ACTUALIZAR TOTALES
-    ========================================================
-    */
+    /* =====================================================
+       ACTUALIZAR TOTALES
+    ===================================================== */
 
     function calculateTotals() {
 
@@ -1725,11 +1696,9 @@
     }
 
 
-    /*
-    ========================================================
-    CUANDO ESCRIBES MANUALMENTE
-    ========================================================
-    */
+    /* =====================================================
+       ESCRIBIR MANUALMENTE
+    ===================================================== */
 
     inputs.forEach((input, index) => {
 
@@ -1742,8 +1711,10 @@
 
 
                 if (value < 0) {
+
                     value = 0;
                     this.value = 0;
+
                 }
 
 
@@ -1771,11 +1742,9 @@
     });
 
 
-    /*
-    ========================================================
-    BORRAR CUENTA
-    ========================================================
-    */
+    /* =====================================================
+       BORRAR UNA CUENTA
+    ===================================================== */
 
     function resetAccount(account) {
 
@@ -1804,11 +1773,9 @@
     }
 
 
-    /*
-    ========================================================
-    INICIO
-    ========================================================
-    */
+    /* =====================================================
+       INICIO
+    ===================================================== */
 
     calculateTotals();
 
